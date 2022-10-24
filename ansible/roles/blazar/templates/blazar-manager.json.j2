@@ -1,7 +1,7 @@
 {
     "command": "blazar-manager --config-file /etc/blazar/blazar.conf",
     "config_files": [
-        {% if blazar_enable_k3s %}{
+        {% if blazar_enable_k3s | bool %}{
             "source": "{{ container_config_directory }}/kubeconfig.yml",
             "dest": "/etc/blazar/kubeconfig.yml",
             "owner": "blazar",

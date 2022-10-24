@@ -1,7 +1,7 @@
 {
     "command": "doni-api",
     "config_files": [
-        {% if doni_enable_k3s %}{
+        {% if doni_enable_k3s | bool %}{
             "source": "{{ container_config_directory }}/kubeconfig.yml",
             "dest": "/etc/doni/kubeconfig.yml",
             "owner": "doni",
