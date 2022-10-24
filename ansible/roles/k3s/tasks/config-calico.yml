@@ -23,6 +23,12 @@
     creates: "{{ k3s_conf_location }}/calico/release-{{ k3s_calico_version }}"
   register: calico_release
 
+- name: Install kubernetes python package
+  delegate_to: "{{ groups['deployment'][0] }}"
+  ansible.builtin.pip:
+    name: kubernetes
+    virtualenv: "{{ virtualenv }}"
+  
 # note: server-side-apply used due to the large size
 - name: Apply Calico operator
   delegate_to: "{{ groups['deployment'][0] }}"
@@ -35,6 +41,32 @@
       force_conflicts: yes
   when:
     - not (k3s_dry_run | bool)
+
+
+- name: Wait till the Tigera Operator has fully applied
+  delegate_to: "{{ groups['deployment'][0] }}"
+  kubernetes.core.k8s_info:
+    kind: TigeraStatus
+    name: calico
+    namespace: default
+    wait: yes
+    wait_condition:
+      type: "Available"
+      status: "True"
+      reason: "AllObjectsAvailable"
+
+- name: Wait till the Calico Installation is created
+  delegate_to: "{{ groups['deployment'][0] }}"
+  kubernetes.core.k8s_info:
+    kind: Installation
+    name: default
+    namespace: default
+    wait: yes
+    wait_condition:
+      type: "Ready"
+      status: "True"
+      reason: "AllObjectsAvailable"
+
 
 - name: Install calicoctl
   become: true

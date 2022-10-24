@@ -1,16 +1,13 @@
 ---
-- name: Restart k3s #TODO
-  vars:
-    service_name: "doni-api"
-    service: "{{ doni_services[service_name] }}"
-  become: true
-  kolla_docker:
-    action: "recreate_or_restart_container"
-    common_options: "{{ secondry_docker_common_options }}"
-    name: "{{ service.container_name }}"
-    image: "{{ service.image }}"
-    volumes: "{{ service.volumes|reject('equalto', '')|list }}"
-    dimensions: "{{ service.dimensions }}"
-  when:
-    - kolla_action != "config"
+- name: Restart k3s service
+  systemd:
+    name: k3s
+    daemon_reload: yes
+    state: "restarted"
+  become: yes
 
+- name: Update kubectl cluster server address
+  ansible.builtin.command: |
+    k3s kubectl config set-cluster default
+      --server=https://{{ k3s_server_ip }}:{{ k3s_port }}
+      --kubeconfig ~{{ ansible_user_id }}/.kube/config

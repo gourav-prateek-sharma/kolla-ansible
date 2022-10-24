@@ -1,4 +1,3 @@
-# {{ ansible_managed }}
 # This is based on the default value of the installation configuration found at
 # https://raw.githubusercontent.com/projectcalico/calico/v3.24.1/manifests/custom-resources.yaml
 
@@ -22,18 +21,13 @@ spec:
         nodeSelector: all()
     # Ensure calico uses the last Wireguard interface
     nodeAddressAutodetectionV4:
-      firstFound: false
-      interface: wg-.*
+      canReach: {{ k3s_server_ip }}
+
     containerIPForwarding: Enabled
     # Lower MTU to accommodate Wireguard encapsulation; Calico uses IPIP encapsulation
     # which adds a 20-byte overhead. The underlying Wireguard interface has an MTU of
     # 1420 configured, so we subtract 20 to get 1400.
     mtu: 1400
-  # TODO(jason): remove this when we have a pull-through cache deployed
-  # Pull control plane images for Calico from our private registry to avoid rate limits.
-  imagePullSecrets:
-    - name: chi-readonly-secret
-      registry: docker.chameleoncloud.org/
 
 ---
 
