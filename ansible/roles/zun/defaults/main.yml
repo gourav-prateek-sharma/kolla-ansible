@@ -77,25 +77,25 @@ zun_database_address: "{{ database_address | put_address_in_context('url') }}:{{
 ####################
 zun_install_type: "{{ kolla_install_type }}"
 zun_tag: "{{ openstack_tag }}"
-zun_docker_common_options: "{{ docker_common_options }}"
+zun_docker_common_options: "{{ secondry_docker_common_options }}"
 
-zun_api_image: "{{ docker_registry ~ '/' if docker_registry else '' }}{{ docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-api"
+zun_api_image: "{{ secondry_docker_registry ~ '/' }}{{ secondry_docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-api"
 zun_api_tag: "{{ zun_tag }}"
 zun_api_image_full: "{{ zun_api_image }}:{{ zun_api_tag }}"
 
-zun_wsproxy_image: "{{ docker_registry ~ '/' if docker_registry else '' }}{{ docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-wsproxy"
+zun_wsproxy_image: "{{ secondry_docker_registry ~ '/' }}{{ secondry_docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-wsproxy"
 zun_wsproxy_tag: "{{ zun_tag }}"
 zun_wsproxy_image_full: "{{ zun_wsproxy_image }}:{{ zun_wsproxy_tag }}"
 
-zun_compute_image: "{{ docker_registry ~ '/' if docker_registry else '' }}{{ docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-compute"
+zun_compute_image: "{{ secondry_docker_registry ~ '/' }}{{ secondry_docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-compute"
 zun_compute_tag: "{{ zun_tag }}"
 zun_compute_image_full: "{{ zun_compute_image }}:{{ zun_compute_tag }}"
 
-zun_cni_daemon_image: "{{ docker_registry ~ '/' if docker_registry else '' }}{{ docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-cni-daemon"
+zun_cni_daemon_image: "{{ secondry_docker_registry ~ '/' }}{{ secondry_docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-cni-daemon"
 zun_cni_daemon_tag: "{{ zun_tag }}"
 zun_cni_daemon_image_full: "{{ zun_cni_daemon_image }}:{{ zun_cni_daemon_tag }}"
 
-zun_compute_k8s_image: "{{ docker_registry ~ '/' if docker_registry else '' }}{{ docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-compute-k8s"
+zun_compute_k8s_image: "{{ secondry_docker_registry ~ '/' }}{{ secondry_docker_namespace }}/{{ kolla_base_distro }}-{{ zun_install_type }}-zun-compute-k8s"
 zun_compute_k8s_tag: "{{ zun_tag }}"
 zun_compute_k8s_image_full: "{{ zun_compute_k8s_image }}:{{ zun_compute_k8s_tag }}"
 
