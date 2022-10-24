@@ -1,12 +1,12 @@
 {
     "command": "doni-worker",
     "config_files": [
-	{
-	    "source": "{{ container_config_directory }}/kubeconfig.yml",
-	    "dest": "/etc/doni/kubeconfig.yml",
-	    "owner": "doni",
-	    "perm": "0600"
-	},
+        {% if doni_enable_k3s %}{
+            "source": "{{ container_config_directory }}/kubeconfig.yml",
+            "dest": "/etc/doni/kubeconfig.yml",
+            "owner": "doni",
+            "perm": "0600"
+        },{% endif %}
         {
             "source": "{{ container_config_directory }}/doni.conf",
             "dest": "/etc/doni/doni.conf",

@@ -35,6 +35,7 @@
     path: "/etc/rancher/k3s/k3s.yaml"
     mode: o+r
   when:
+    - enable_doni_k3s | bool
     - inventory_hostname in groups[item.value.group]
     - item.value.enabled | bool
   with_dict: "{{ doni_services }}"
@@ -46,6 +47,7 @@
     mode: "0660"
   become: true
   when:
+    - enable_doni_k3s | bool
     - item.key in [ "doni-api", "doni-worker" ]
     - inventory_hostname in groups[item.value.group]
     - item.value.enabled | bool

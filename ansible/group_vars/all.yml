@@ -293,6 +293,7 @@ barbican_api_port: "9311"
 barbican_api_listen_port: "{{ barbican_api_port }}"
 
 blazar_api_port: "1234"
+blazar_enable_k3s: "{{ enable_k3s | bool }}"
 
 ceph_rgw_internal_fqdn: "{{ kolla_internal_fqdn }}"
 ceph_rgw_external_fqdn: "{{ kolla_external_fqdn }}"
@@ -781,6 +782,11 @@ num_nova_fake_per_node: 5
 
 # Clean images options are specified here
 enable_destroy_images: "no"
+
+####################
+# Doni options
+###################
+doni_enable_k3s: "{{ enable_k3s | bool }}"
 
 ####################
 # Monasca options
