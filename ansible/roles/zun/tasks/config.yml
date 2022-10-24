@@ -73,6 +73,17 @@
   notify:
     - Restart {{ item.key }} container
 
+- name: Set kubeconfig copy permission from etc
+  become: true
+  vars:
+    service_name: zun-compute-k8s
+  file:
+    path: "/etc/rancher/k3s/k3s.yaml"
+    mode: o+r
+  when:
+    - zun_services[service_name].enabled | bool
+    - inventory_hostname in groups[zun_services[service_name].group]
+
 - name: Copying over kubeconfig for k8s agent
   vars:
     service_name: zun-compute-k8s
@@ -81,9 +92,7 @@
     dest: "{{ node_config_directory }}/{{ service_name }}/kubeconfig.yml"
     mode: "0600"
   with_first_found:
-    - "{{ node_custom_config }}/zun/{{ inventory_hostname }}/kubeconfig.yml"
-    - "{{ node_custom_config }}/zun/kubeconfig.yml"
-    - "kubeconfig.yml.j2"
+    - "/etc/rancher/k3s/k3s.yaml"
   become: true
   when:
     - zun_services[service_name].enabled | bool

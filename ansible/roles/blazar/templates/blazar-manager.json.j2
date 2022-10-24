@@ -1,6 +1,12 @@
 {
     "command": "blazar-manager --config-file /etc/blazar/blazar.conf",
     "config_files": [
+	{
+	    "source": "{{ container_config_directory }}/kubeconfig.yml",
+	    "dest": "/etc/blazar/kubeconfig.yml",
+	    "owner": "blazar",
+	    "perm": "0600"
+	},
         {
             "source": "{{ container_config_directory }}/blazar.conf",
             "dest": "/etc/blazar/blazar.conf",

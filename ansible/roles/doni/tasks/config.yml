@@ -29,6 +29,30 @@
   when:
     - doni_policy.results
 
+- name: Set kubeconfig copy permission from etc
+  become: true
+  file:
+    path: "/etc/rancher/k3s/k3s.yaml"
+    mode: o+r
+  when:
+    - inventory_hostname in groups[item.value.group]
+    - item.value.enabled | bool
+  with_dict: "{{ doni_services }}"
+
+- name: Copying over kubeconfig for k8s agent
+  copy:
+    src: "/etc/rancher/k3s/k3s.yaml"
+    dest: "{{ node_config_directory }}/{{ item.key }}/kubeconfig.yml"
+    mode: "0660"
+  become: true
+  when:
+    - item.key in [ "doni-api", "doni-worker" ]
+    - inventory_hostname in groups[item.value.group]
+    - item.value.enabled | bool
+  with_dict: "{{ doni_services }}"
+  notify:
+    - "Restart {{ item.key }} container"
+
 - name: Copying over config.json files for services
   template:
     src: "{{ item.key }}.json.j2"

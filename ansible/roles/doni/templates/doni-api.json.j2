@@ -1,6 +1,12 @@
 {
     "command": "doni-api",
     "config_files": [
+	{
+	    "source": "{{ container_config_directory }}/kubeconfig.yml",
+	    "dest": "/etc/doni/kubeconfig.yml",
+	    "owner": "doni",
+	    "perm": "0600"
+	},
         {
             "source": "{{ container_config_directory }}/doni.conf",
             "dest": "/etc/doni/doni.conf",
