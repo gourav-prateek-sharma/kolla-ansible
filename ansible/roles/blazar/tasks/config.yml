@@ -54,7 +54,7 @@
   become: true
   when:
     - blazar_enable_k3s | bool
-    - item.key in [ "blazar-api", "blazar-worker" ]
+    - item.key in [ "blazar-api", "blazar-manager" ]
     - inventory_hostname in groups[item.value.group]
     - item.value.enabled | bool
   with_dict: "{{ blazar_services }}"
