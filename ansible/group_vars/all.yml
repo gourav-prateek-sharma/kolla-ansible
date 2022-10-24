@@ -158,6 +158,18 @@ docker_common_options:
   graceful_timeout: "{{ docker_graceful_timeout }}"
   client_timeout: "{{ docker_client_timeout }}"
 
+secondry_docker_common_options:
+  auth_email: "{{ docker_registry_email }}"
+  auth_password: "{{ secondry_docker_registry_password }}"
+  auth_registry: "{{ secondry_docker_registry }}"
+  auth_username: "{{ secondry_docker_registry_username }}"
+  environment:
+    KOLLA_CONFIG_STRATEGY: "{{ config_strategy }}"
+  restart_policy: "{{ docker_restart_policy }}"
+  restart_retries: "{{ docker_restart_policy_retry }}"
+  graceful_timeout: "{{ docker_graceful_timeout }}"
+  client_timeout: "{{ docker_client_timeout }}"
+
 ####################
 # Dimensions options
 ####################
