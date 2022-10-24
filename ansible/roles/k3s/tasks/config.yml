@@ -12,3 +12,6 @@
 
 - include_tasks: config-registry-proxy.yml
   when: k3s_enable_registry_proxy | bool
+
+- include_tasks: config-multus.yml
+  when: k3s_enable_multus | bool

@@ -1,0 +1,16 @@
+---
+# Download and apply Multus manifest
+- name: Download Multus manifest
+  become: yes
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
+    dest: "{{ k3s_conf_location }}/multus-daemonset-thick.yml"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Apply Multus to the cluster
+  kubernetes.core.k8s:
+    apply: yes
+    state: present
+    src: "{{ k3s_conf_location }}/multus-daemonset-thick.yml"
