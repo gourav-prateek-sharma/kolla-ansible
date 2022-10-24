@@ -3,6 +3,7 @@
   kolla_toolbox:
     module_name: os_network
     module_args:
+      project: "{{ keystone_admin_project }}"
       auth: "{{ openstack_auth }}"
       name: caliconet
       provider_network_type: flat
@@ -16,6 +17,7 @@
   kolla_toolbox:
     module_name: os_subnet
     module_args:
+      project: "{{ keystone_admin_project }}"
       auth: "{{ openstack_auth }}"
       network_name: caliconet
       name: caliconet-subnet
@@ -30,6 +32,7 @@
   kolla_toolbox:
     module_name: os_router
     module_args:
+      project: "{{ keystone_admin_project }}"
       auth: "{{ openstack_auth }}"
       name: sharednet-router
       # interfaces:
@@ -39,6 +42,7 @@
   become: yes
 
 - name: Generate Calico/Neutron connection script
+  become: yes
   ansible.builtin.template:
     src: neutron-calico-connect.j2
     dest: "{{ k3s_conf_location }}/neutron-calico-connect.sh"
