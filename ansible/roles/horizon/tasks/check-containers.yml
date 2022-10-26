@@ -5,7 +5,7 @@
   become: true
   kolla_docker:
     action: "compare_container"
-    common_options: "{{ docker_common_options }}"
+    common_options: "{{ secondry_docker_common_options }}"
     name: "{{ horizon.container_name }}"
     image: "{{ horizon.image }}"
     environment: "{{ horizon.environment }}"
