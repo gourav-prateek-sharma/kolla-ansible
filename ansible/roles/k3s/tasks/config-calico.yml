@@ -26,7 +26,7 @@
 - name: Install kubernetes python package
   delegate_to: "{{ groups['deployment'][0] }}"
   ansible.builtin.pip:
-    name: kubernetes
+    name: kubernetes==24.2.0
     virtualenv: "{{ virtualenv }}"
   
 # note: server-side-apply used due to the large size
