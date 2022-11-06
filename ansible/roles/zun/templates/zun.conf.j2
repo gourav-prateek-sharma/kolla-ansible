@@ -93,6 +93,11 @@ region_name = {{ openstack_region_name }}
 endpoint_type = internalURL
 ca_file = {{ openstack_cacert }}
 
+[ironic_client]
+region_name = {{ openstack_region_name }}
+endpoint_type = internalURL
+ca_file = {{ openstack_cacert }}
+
 [cinder_client]
 region_name = {{ openstack_region_name }}
 endpoint_type = internalURL
